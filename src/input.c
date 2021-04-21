@@ -20,7 +20,7 @@ void doInput()
     }
 }
 
-void movement(float* x, float* y)
+void movement(float* x, float* y, int fire)
 {
     const Uint8* state = SDL_GetKeyboardState(NULL);
     if (state[SDL_SCANCODE_D])
@@ -38,5 +38,14 @@ void movement(float* x, float* y)
     if (state[SDL_SCANCODE_S])
     {
         *y += 10;
+    }
+    // handle shooting
+    if (state[SDL_SCANCODE_L])
+    {
+        app.fire = 1;
+    }
+    else
+    {
+        app.fire = 0;
     }
 }

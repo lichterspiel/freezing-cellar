@@ -2,21 +2,21 @@
 
 int main(int argc, char* argv[])
 {
-    // clear app/player object
+
+    long then;
+    float remainder;
+
     memset(&app, 0, sizeof(App));
-    memset(&player, 0, sizeof(Entity));
 
     initSDL();
 
-    player.x = 100;
-    player.y = 100;
-    player.texture = loadTexture("bulb.png");
-
-    // pointer to coordinates of player
-    float* x = &player.x;
-    float* y = &player.y;
-
     atexit(cleanup);
+
+    initStage();
+
+    then = SDL_GetTicks();
+
+    remainder = 0;
 
     while(1)
     {
@@ -24,14 +24,37 @@ int main(int argc, char* argv[])
 
         doInput();
 
-        movement(x, y);
+        app.delegate.logic();
 
-        blit(player.texture, player.x, player.y, 0.25);
+        app.delegate.draw();
 
         presentScene();
 
-        SDL_Delay(16);
+        capFrameRate(&then, &remainder);
+    }
+    return 0;
+}
+
+static void capFrameRate(long *then, float *remainder)
+{
+    long wait, frameTime;
+
+    wait = 16 + *remainder;
+
+    *remainder -= (int)*remainder;
+
+    frameTime = SDL_GetTicks() - *then;
+
+    wait -= frameTime;
+
+    if (wait < 1)
+    {
+        wait = 1;
     }
 
-    return 0;
+    SDL_Delay(wait);
+
+    *remainder += 0.667;
+
+    *then = SDL_GetTicks();
 }

@@ -18,21 +18,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#define MIN(a,b) (((a)<(b))?(a):(b))
-#define MAX(a,b) (((a)>(b))?(a):(b))
+#include "util.h"
 
-#define SCREEN_WIDTH   1280
-#define SCREEN_HEIGHT  720
+int collision(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2)
+{
+	return (MAX(x1, x2) < MIN(x1 + w1, x2 + w2)) && (MAX(y1, y2) < MIN(y1 + h1, y2 + h2));
+}
 
-#define PLAYER_SPEED          4
-#define PLAYER_BULLET_SPEED   20
+void calcSlope(int x1, int y1, int x2, int y2, float *dx, float *dy)
+{
+	int steps = MAX(abs(x1 - x2), abs(y1 - y2));
 
-#define MAX_KEYBOARD_KEYS 350
+	if (steps == 0)
+	{
+		*dx = *dy = 0;
+		return;
+	}
 
-#define SIDE_PLAYER 0
-#define SIDE_ALIEN  1
+	*dx = (x1 - x2);
+	*dx /= steps;
 
-#define FPS 60
-#define ALIEN_BULLET_SPEED 8
-
-#define MAX_STARS 500
+	*dy = (y1 - y2);
+	*dy /= steps;
+}
