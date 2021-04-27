@@ -42,8 +42,8 @@ void blit(SDL_Texture* texture, int x, int y, float scale)
 
     // actually render it to the screen the dest says where it should be rendered
     SDL_RenderCopy(app.renderer, texture, NULL, &dest);
-    SDL_SetRenderDrawColor(app.renderer, 0, 0, 0, 255);
-    SDL_RenderDrawRect(app.renderer, &dest);
+   // SDL_SetRenderDrawColor(app.renderer, 0, 0, 0, 255);
+    //SDL_RenderDrawRect(app.renderer, &dest);
 }
 
 void blitRect(SDL_Texture* texture, SDL_Rect* src, int x, int y)

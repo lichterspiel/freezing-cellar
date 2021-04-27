@@ -562,12 +562,12 @@ static void drawStarfield()
 
     for (i = 0 ; i < MAX_STARS ; i++)
     {
-        c = 32 * stars[i].speed;
+        c = (32 * stars[i].speed);
 
-        SDL_SetRenderDrawColor(app.renderer, c, c, c, 255);
+        SDL_SetRenderDrawColor(app.renderer, c, c, c, 125);
 
         SDL_RenderDrawLine(app.renderer, stars[i].x, stars[i].y, stars[i].x + 3, stars[i].y);
-	}
+    }
 }
 
 static void drawBullets()
