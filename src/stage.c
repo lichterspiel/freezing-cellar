@@ -68,6 +68,8 @@ static void resetStage()
     enemySpawnTimer = 0;
 
     stageResetTimer = FPS * 3;
+
+    stage.score = 0;
 }
 
 static void initPlayer()
@@ -179,8 +181,11 @@ static void doPlayer()
         // handle shooting
         if (state[SDL_SCANCODE_L] && player->reload == 0)
         {
+            playSound(SND_PLAYER_FIRE, CH_PLAYER);
+
             fireBullet();
         }
+
     }
 }
 
@@ -468,6 +473,8 @@ static void doEnemies()
         if (e != player && player != NULL && --e->reload <= 0)
         {
             fireAlienBullet(e);
+
+            playSound(SND_ALIEN_FIRE, CH_ALIEN_FIRE);
         }
     }
 }
@@ -517,6 +524,19 @@ static int bulletHitFighter(Entity *b)
 
             addDebris(e);
 
+            if (e == player)
+            {
+                playSound(SND_PLAYER_DIE, CH_PLAYER);
+            }
+            else
+            {
+                playSound(SND_ALIEN_DIE, CH_ANY);
+
+                stage.score++;
+
+                highscore = MAX(stage.score, highscore);
+            }
+
             return 1;
         }
     }
@@ -538,6 +558,8 @@ static void draw()
     drawDebris();
 
     drawExplosions();
+
+    drawHud();
 }
 
 static void drawBackground()
@@ -616,4 +638,19 @@ static void drawExplosions()
     }
 
     SDL_SetRenderDrawBlendMode(app.renderer, SDL_BLENDMODE_NONE);
+}
+
+
+static void drawHud()
+{
+    drawText(10, 10, 255, 255, 255, "SCORE: %03d", stage.score);
+
+    if (stage.score > 0 && stage.score == highscore)
+    {
+        drawText(960, 10, 0, 255, 0, "HIGH SCORE: %03d", highscore);
+    }
+    else
+    {
+        drawText(960, 10, 255, 255, 255,"HIGH SCORE: %03d", highscore);
+    }
 }

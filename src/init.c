@@ -30,6 +30,15 @@ void initSDL()
         printf("Failed to create Renderer %s\n", SDL_GetError());
         exit(1);
     }
+
+    // init audio
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
+    {
+        printf("Could not initialize SDL Mixer \n");
+        exit(1);
+    }
+
+    Mix_AllocateChannels(MAX_SND_CHANNELS);
 }
 
 void cleanup()
