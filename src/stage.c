@@ -11,13 +11,13 @@ void initStage()
     stage.explosionTail = &stage.explosionHead;
     stage.explosionTail = &stage.explosionHead;
 
-    bulletTexture = loadTexture("bullet.png");
-    enemyTexture = loadTexture("enemy.png");
-    alienBulletTexture = loadTexture("bullet.png");
-    playerTexture = loadTexture("bulb.png");
-    background = loadTexture("background.png");
-    explosionTexture = loadTexture("explosion.png");
-    pointsTexture = loadTexture("points.png");
+    bulletTexture = loadTexture("gfx/bullet.png");
+    enemyTexture = loadTexture("gfx/enemy.png");
+    alienBulletTexture = loadTexture("gfx/bullet.png");
+    playerTexture = loadTexture("gfx/bulb.png");
+    background = loadTexture("gfx/background.png");
+    explosionTexture = loadTexture("gfx/explosion.png");
+    pointsTexture = loadTexture("gfx/points.png");
 
     resetStage();
 
