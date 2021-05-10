@@ -38,6 +38,8 @@ static void addDebris(Entity *e);
 static void doDebris(void);
 static void drawDebris(void);
 static void drawHud();
+static void doPointsPods();
+static void drawPointsPods();
 
 
 // variables
@@ -48,6 +50,7 @@ static SDL_Texture *alienBulletTexture;
 static SDL_Texture *playerTexture;
 static SDL_Texture* background;
 static SDL_Texture* explosionTexture;
+static SDL_Texture* pointsTexture;
 static int enemySpawnTimer;
 static int stageResetTimer;
 static int backgroundX;

@@ -47,6 +47,7 @@ enum
 {
     CH_ANY = -1,
     CH_PLAYER,
+    CH_POINTS,
     CH_ALIEN_FIRE
 };
 
@@ -57,5 +58,6 @@ enum
     SND_ALIEN_FIRE,
     SND_PLAYER_DIE,
     SND_ALIEN_DIE,
+    SND_POINTS,
     SND_MAX
 };
