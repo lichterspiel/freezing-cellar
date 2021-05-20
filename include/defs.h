@@ -61,3 +61,10 @@ enum
     SND_POINTS,
     SND_MAX
 };
+
+enum
+{
+    TEXT_LEFT,
+    TEXT_CENTER,
+    TEXT_RIGHT
+};

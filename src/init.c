@@ -41,6 +41,20 @@ void initSDL()
     Mix_AllocateChannels(MAX_SND_CHANNELS);
 }
 
+void initGame(void)
+{
+	initBackground();
+
+	initStarfield();
+
+	initSounds();
+
+	initFonts();
+
+	memset(&stage, 0, sizeof(Stage));
+
+}
+
 void cleanup()
 {
     SDL_DestroyRenderer(app.renderer);

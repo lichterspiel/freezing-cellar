@@ -16,7 +16,7 @@ DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 # It's mostly machine code, but has info that allows a linker to see what symbols are in it as well as symbols it requires in order to work.
 # (For reference, "symbols" are basically names of global objects, functions, etc.)
 
-_OBJ = main.o draw.o init.o input.o stage.o util.o sound.o text.o
+_OBJ = main.o draw.o init.o input.o stage.o util.o sound.o text.o title.o background.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 # flags to give the compiles

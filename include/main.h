@@ -8,6 +8,8 @@ extern void presentScene();
 extern void doInput();
 extern void initSounds();
 extern void initFonts();
+extern void initTitle();
+extern void initGame();
 
 
 static void capFrameRate(long *then, float *remainder);

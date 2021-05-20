@@ -15,11 +15,11 @@ void initStage()
     enemyTexture = loadTexture("gfx/enemy.png");
     alienBulletTexture = loadTexture("gfx/bullet.png");
     playerTexture = loadTexture("gfx/bulb.png");
-    background = loadTexture("gfx/background.png");
     explosionTexture = loadTexture("gfx/explosion.png");
     pointsTexture = loadTexture("gfx/points.png");
 
     resetStage();
+
 
 }
 
@@ -72,7 +72,6 @@ static void resetStage()
     stage.pointsTail = &stage.pointsHead;
 
     initPlayer();
-    initStarfield();
 
     enemySpawnTimer = 0;
 
@@ -139,28 +138,6 @@ static void logic()
     }
 }
 
-static void doBackground()
-{
-    if (--backgroundX < -SCREEN_WIDTH)
-    {
-        backgroundX = 0;
-    }
-}
-
-static void doStarfield()
-{
-    int i;
-
-    for (i = 0; i < MAX_STARS; i++)
-    {
-        stars[i].x -= stars[i].speed;
-
-        if (stars[i].x < 0)
-        {
-            stars[i].x = SCREEN_WIDTH + stars[i].x;
-        }
-    }
-}
 
 static void doPlayer()
 {
@@ -424,6 +401,8 @@ static void spawnEnemies()
         SDL_QueryTexture(enemy->texture, NULL, NULL, &enemy->w, &enemy->h);
 
         enemy->dx = -(2 + (rand() % 4));
+        enemy->dy = -100 + (rand() % 200);
+        enemy->dy /= 100;
         enemy->side = SIDE_ALIEN;
 
         enemy->reload = FPS * (1 + (rand() % 3));
@@ -567,12 +546,19 @@ static void doEnemies()
     Entity* e;
     for (e = stage.fighterHead.next ; e != NULL ; e = e->next)
     {
-        if (e != player && player != NULL && --e->reload <= 0)
-        {
-            fireAlienBullet(e);
 
-            playSound(SND_ALIEN_FIRE, CH_ALIEN_FIRE);
+        if (e != player)
+        {
+            e->y = MIN(MAX(e->y, 0), SCREEN_HEIGHT - e->h);
+
+            if (player != NULL && --e->reload <= 0)
+            {
+                fireAlienBullet(e);
+
+                playSound(SND_ALIEN_FIRE, CH_ALIEN_FIRE);
+            }
         }
+
     }
 }
 
@@ -663,35 +649,7 @@ static void draw()
     drawHud();
 }
 
-static void drawBackground()
-{
-    SDL_Rect dest;
-    int x;
 
-    for (x = backgroundX; x < SCREEN_WIDTH; x += SCREEN_WIDTH)
-    {
-        dest.x = x;
-        dest.y = 0;
-        dest.w = SCREEN_WIDTH;
-        dest.h = SCREEN_HEIGHT;
-
-        SDL_RenderCopy(app.renderer, background, NULL, &dest);
-    }
-}
-
-static void drawStarfield()
-{
-    int i, c;
-
-    for (i = 0 ; i < MAX_STARS ; i++)
-    {
-        c = (32 * stars[i].speed);
-
-        SDL_SetRenderDrawColor(app.renderer, c, c, c, 125);
-
-        SDL_RenderDrawLine(app.renderer, stars[i].x, stars[i].y, stars[i].x + 3, stars[i].y);
-    }
-}
 
 static void drawPointsPods()
 {
@@ -699,7 +657,11 @@ static void drawPointsPods()
 
     for (e = stage.pointsHead.next; e != NULL; e = e->next)
     {
-        blit(e->texture, e->x, e->y, 1);
+    if (e->health > (FPS * 2) || e->health % 12 < 6)
+        {
+
+            blit(e->texture, e->x, e->y, 1);
+        }
     }
 }
 
@@ -754,14 +716,14 @@ static void drawExplosions()
 
 static void drawHud()
 {
-    drawText(10, 10, 255, 255, 255, "SCORE: %03d", stage.score);
+    drawText(10, 10, 255, 255, 255,TEXT_LEFT ,"SCORE: %03d", stage.score);
 
     if (stage.score > 0 && stage.score == highscore)
     {
-        drawText(960, 10, 0, 255, 0, "HIGH SCORE: %03d", highscore);
+        drawText(960, 10, 0, 255, 0,TEXT_RIGHT, "HIGH SCORE: %03d", highscore);
     }
     else
     {
-        drawText(960, 10, 255, 255, 255,"HIGH SCORE: %03d", highscore);
+        drawText(960, 10, 255, 255, 255,TEXT_RIGHT,"HIGH SCORE: %03d", highscore);
     }
 }

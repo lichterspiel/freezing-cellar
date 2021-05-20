@@ -12,11 +12,10 @@ int main(int argc, char* argv[])
 
     atexit(cleanup);
 
-    initStage();
 
-    initSounds();
+	initGame();
 
-    initFonts();
+	initTitle();
 
     then = SDL_GetTicks();
 

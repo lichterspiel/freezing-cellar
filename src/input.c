@@ -20,6 +20,7 @@ void doInput()
     }
 }
 
+
 void movement(float* x, float* y, int fire)
 {
     const Uint8* state = SDL_GetKeyboardState(NULL);
