@@ -19,7 +19,6 @@ void initTitle()
 static void logic(void)
 {
     const Uint8* state = SDL_GetKeyboardState(NULL);
-    printf("0");
 
     doBackground();
 
@@ -44,7 +43,6 @@ static void logic(void)
 
 static void draw()
 {
-    printf("1");
     drawBackground();
 
     drawStarfield();
