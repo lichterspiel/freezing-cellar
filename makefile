@@ -38,8 +38,8 @@ $(ODIR)/%.o: %.c %.h $(DEPS)
 
 game: $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS) 
-.PHONY: clean
 
+.PHONY: clean
 clean:
 	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ 
 

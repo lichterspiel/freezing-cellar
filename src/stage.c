@@ -21,7 +21,7 @@ void initStage()
     resetStage();
 
 
-}
+}   
 
 static void resetStage()
 {
